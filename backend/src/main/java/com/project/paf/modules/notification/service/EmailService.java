@@ -156,12 +156,7 @@ public class EmailService {
         String to      = user.getEmail();
         String name    = user.getName();
         String subject = "🔄 Role Updated — Smart Campus";
-        String html    = "<div style=\"font-family:sans-serif;color:#333;line-height:1.5;max-width:600px;\">" +
-                         "<h2 style=\"color:#4f46e5;\">Role Updated</h2>" +
-                         "<p>Hello " + (name != null ? name : "") + ",</p>" +
-                         "<p>An administrator has updated your system role to <strong>" + newRole + "</strong>.</p>" +
-                         "<p>If you believe this is an error, please contact support.</p>" +
-                         "</div>";
+        String html    = EmailTemplates.roleChanged(name, newRole);
         sendHtmlEmail(to, name, subject, html);
         log.info("Role-change notification queued for '{}'", to);
     }

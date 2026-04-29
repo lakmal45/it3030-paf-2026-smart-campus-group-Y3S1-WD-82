@@ -22,6 +22,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 /**
@@ -159,7 +160,7 @@ public class TicketServiceTest {
  
         assertEquals(TicketStatus.IN_PROGRESS, response.getStatus());
         assertEquals(technicianUser.getId(), response.getAssignedTechnicianId());
-        verify(appNotificationService, times(1)).createNotification(eq(technicianUser), anyString(), anyString(), anyString());
+        verify(emailService, times(1)).notifyTechnicianAssigned(any(IncidentTicket.class), eq(technicianUser));
     }
 
     @Test

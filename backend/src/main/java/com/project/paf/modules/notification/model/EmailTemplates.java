@@ -645,6 +645,56 @@ public final class EmailTemplates {
     // Booking — Cancelled
     // ─────────────────────────────────────────────────────────────────────────
 
+    // -------------------------------------------------------------------------
+    // Role Changed
+    // -------------------------------------------------------------------------
+
+    /**
+     * Builds the HTML email body sent when an administrator updates a user's role.
+     *
+     * @param name    the user's display name
+     * @param newRole the updated role assigned to the user
+     * @return HTML string
+     */
+    public static String roleChanged(String name, String newRole) {
+        String safeName = (name == null || name.isBlank()) ? "there" : name;
+        String roleBadgeClass = switch (newRole.toUpperCase()) {
+            case "ADMIN"      -> "badge-resolved";
+            case "MANAGER"    -> "badge-open";
+            case "TECHNICIAN" -> "badge-progress";
+            default           -> "badge-closed";
+        };
+
+        return """
+                <!DOCTYPE html><html><head>%s</head><body>
+                <div class="wrapper">
+                  <div class="header">
+                    <h1>Role Updated</h1>
+                    <p>Your Smart Campus access has been updated</p>
+                  </div>
+                  <div class="body">
+                    <p>Hi <strong>%s</strong>,</p>
+                    <p>An administrator has updated your system role.</p>
+                    <div class="ticket-card">
+                      <table>
+                        <tr><td>New Role</td><td><span class="badge %s">%s</span></td></tr>
+                      </table>
+                    </div>
+                    <p>Your permissions in the Smart Campus system may have changed based on this update.</p>
+                    <p>If you believe this change was made in error, please contact the campus support team.</p>
+                  </div>
+                  <div class="footer">
+                    <p>Smart Campus · IT3030 Project · This is an automated notification — please do not reply.</p>
+                  </div>
+                </div>
+                </body></html>
+                """.formatted(
+                STYLE,
+                safeName,
+                roleBadgeClass, newRole
+        );
+    }
+
     /**
      * Builds the HTML email body sent to the user when their booking is cancelled.
      *

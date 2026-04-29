@@ -81,7 +81,7 @@ public class UserController {
         if (currentUser == null) {
             return ResponseEntity.status(401).body("Not logged in");
         }
-        userService.deleteUser(java.util.Objects.requireNonNull(currentUser.getId()));
+        userService.deleteUser(java.util.Objects.requireNonNull(currentUser.getId()), currentUser);
         session.invalidate();
         return ResponseEntity.ok("Account deleted successfully");
     }

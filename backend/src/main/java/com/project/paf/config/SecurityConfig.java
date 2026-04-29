@@ -3,6 +3,7 @@ package com.project.paf.config;
 import java.util.Arrays;
 import java.util.List;
 
+import com.project.paf.modules.auditlog.AuditLogService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -27,10 +28,13 @@ public class SecurityConfig {
 
     private final UserRepository userRepository;
     private final EmailService emailService;
+    private final AuditLogService auditLogService;
 
-    public SecurityConfig(UserRepository userRepository, EmailService emailService) {
+    public SecurityConfig(UserRepository userRepository, EmailService emailService,
+                          AuditLogService auditLogService) {
         this.userRepository = userRepository;
         this.emailService = emailService;
+        this.auditLogService = auditLogService;
     }
 
     @Bean
@@ -96,7 +100,7 @@ public class SecurityConfig {
 
                 .oauth2Login(oauth -> oauth
                         .defaultSuccessUrl("http://localhost:5173/dashboard", true)
-                        .successHandler(new OAuth2LoginSuccessHandler(userRepository, emailService)))
+                        .successHandler(new OAuth2LoginSuccessHandler(userRepository, emailService, auditLogService)))
 
                 .logout(logout -> logout
                         .logoutUrl("/logout")

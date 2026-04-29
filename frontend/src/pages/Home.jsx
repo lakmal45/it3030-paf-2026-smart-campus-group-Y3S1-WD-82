@@ -80,10 +80,22 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] font-sans selection:bg-indigo-500/30 overflow-x-hidden relative">
       {/* Decorative Background Elements */}
-      <div className="fixed top-0 left-0 w-full h-[1000px] overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-indigo-300/40 to-purple-300/40 blur-[120px] animate-[pulse_8s_ease-in-out_infinite]" />
-        <div className="absolute top-[40%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-tr from-cyan-300/40 to-blue-300/40 blur-[120px] animate-[pulse_10s_ease-in-out_infinite_alternate]" />
-        <div className="absolute -bottom-[20%] right-[10%] w-[40%] h-[40%] rounded-full bg-gradient-to-bl from-rose-200/30 to-orange-200/30 blur-[100px]" />
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Modern dot grid background */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoOTksIDEwMiwgMjQxLCAwLjE1KSIvPjwvc3ZnPg==')] bg-[length:40px_40px] opacity-50" />
+        
+        {/* Subtle geometric shapes instead of heavy blurs */}
+        <div className="absolute top-[10%] right-[5%] w-[40vw] h-[40vw] border-[1px] border-indigo-200/40 rounded-full opacity-60 pointer-events-none" />
+        <div className="absolute top-[15%] right-[10%] w-[30vw] h-[30vw] border-[1px] border-purple-200/40 rounded-full opacity-60 pointer-events-none" />
+        <div className="absolute top-[20%] right-[15%] w-[20vw] h-[20vw] border-[1px] border-cyan-200/40 rounded-full opacity-60 pointer-events-none" />
+
+        <div className="absolute top-[30%] -left-[10%] w-96 h-96 bg-gradient-to-tr from-cyan-100/40 to-indigo-100/40 rounded-full blur-[60px]" />
+        <div className="absolute -bottom-[20%] right-[10%] w-96 h-96 bg-gradient-to-bl from-rose-100/40 to-orange-100/40 rounded-full blur-[60px]" />
+        
+        {/* Scattered interactive elements */}
+        <div className="absolute top-[25%] left-[20%] w-3 h-3 bg-indigo-400 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)]" />
+        <div className="absolute top-[35%] right-[25%] w-2 h-2 bg-purple-400 rounded-full opacity-70" />
+        <div className="absolute bottom-[20%] left-[30%] w-4 h-4 bg-cyan-400/50 rounded-full" />
       </div>
 
       {/* Sticky Navigation Header */}
@@ -95,7 +107,7 @@ const Home = () => {
             className="flex items-center gap-3 group cursor-pointer"
             onClick={() => scrollToSection("hero")}
           >
-            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300 bg-white">
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300 bg-white">
               <img
                 src="/src/assets/unihub.png"
                 alt="UniHub Logo"
@@ -103,7 +115,7 @@ const Home = () => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-slate-800 bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-700">
+              <span className="text-2xl font-bold tracking-tight text-slate-800 bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-700">
                 UniHub
               </span>
             </div>
@@ -211,11 +223,27 @@ const Home = () => {
         {/* Hero Section */}
         <section
           id="hero"
-          className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pt-20 pb-24 flex flex-col items-center text-center"
+          className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pt-24 pb-28 flex flex-col items-center text-center"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50/80 border border-indigo-100/80 backdrop-blur-sm mb-8 animate-[fade-in-down_1s_ease-out]">
-            <span className="flex h-2 w-2 rounded-full bg-indigo-600 animate-ping absolute"></span>
-            <span className="flex h-2 w-2 rounded-full bg-indigo-600 relative"></span>
+          {/* Floating tags */}
+          <div className="absolute top-1/4 left-4 lg:left-12 hidden md:flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl shadow-sm transform -rotate-6 hover:rotate-0 hover:-translate-y-1 transition-all duration-300 cursor-default">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+            <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">Live Sync</span>
+          </div>
+          <div className="absolute top-1/3 right-4 lg:right-12 hidden md:flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl shadow-sm transform rotate-6 hover:rotate-0 hover:-translate-y-1 transition-all duration-300 cursor-default">
+            <div className="w-2 h-2 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)]"></div>
+            <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">Secure</span>
+          </div>
+          <div className="absolute bottom-1/4 left-1/4 hidden lg:flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl shadow-sm transform -rotate-3 hover:rotate-0 hover:-translate-y-1 transition-all duration-300 cursor-default">
+            <div className="w-2 h-2 bg-purple-500 rounded-full shadow-[0_0_8px_rgba(168,85,247,0.8)]"></div>
+            <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">Analytics</span>
+          </div>
+
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50/80 border border-indigo-100/80 backdrop-blur-sm mb-8 hover:bg-indigo-100 transition-colors cursor-default">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
+            </span>
             <span className="text-sm font-semibold text-indigo-700 uppercase tracking-wider">
               IT3030 PAF 2026 Project
             </span>
@@ -269,18 +297,20 @@ const Home = () => {
         >
           <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center gap-16">
             <div className="flex-1 relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-[2rem] transform -rotate-3 z-0"></div>
+              {/* Dotted pattern behind image */}
+              <div className="absolute -inset-8 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoOTksIDEwMiwgMjQxLCAwLjIpIi8+PC9zdmc+')] bg-[length:20px_20px] rounded-[3rem] -z-10"></div>
+              <div className="absolute -inset-4 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-[2rem] transform -rotate-3 z-0 transition-transform duration-500 hover:rotate-0"></div>
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                 alt="Students collaborating"
-                className="relative z-10 rounded-[2rem] shadow-2xl object-cover w-full h-[400px]"
+                className="relative z-10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] object-cover w-full h-[400px] hover:-translate-y-2 transition-transform duration-500"
               />
-              <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl z-20 flex items-center gap-4">
-                <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600">
+              <div className="absolute -bottom-6 -right-6 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-white z-20 flex items-center gap-4 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-500">
+                <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
                   <Target size={24} />
                 </div>
                 <div>
-                  <p className="text-slate-500 text-sm font-semibold">
+                  <p className="text-slate-500 text-sm font-semibold uppercase tracking-wider">
                     Project Vision
                   </p>
                   <p className="text-slate-800 font-bold text-lg">
@@ -392,17 +422,20 @@ const Home = () => {
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="bg-white border border-slate-100 p-8 rounded-[2rem] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+                  className="relative bg-white/70 backdrop-blur-md border border-slate-200/60 p-8 rounded-[2rem] shadow-sm hover:shadow-[0_20px_50px_rgba(79,70,229,0.08)] hover:-translate-y-2 transition-all duration-500 group overflow-hidden"
                 >
+                  {/* Decorative hover gradient */}
+                  <div className={`absolute -top-24 -right-24 w-48 h-48 ${item.bg} rounded-full blur-[40px] opacity-0 group-hover:opacity-50 transition-opacity duration-500 pointer-events-none`}></div>
+                  
                   <div
-                    className={`w-14 h-14 rounded-2xl ${item.bg} ${item.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                    className={`relative w-14 h-14 rounded-2xl ${item.bg} ${item.color} flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 shadow-sm border border-white`}
                   >
                     <item.icon size={28} />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-800 mb-3">
+                  <h3 className="relative text-xl font-bold text-slate-800 mb-3 group-hover:text-indigo-900 transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-slate-500 font-medium leading-relaxed">
+                  <p className="relative text-slate-500 font-medium leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -431,7 +464,7 @@ const Home = () => {
 
             <div className="relative">
               {/* Connection Line */}
-              <div className="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-indigo-50 -translate-y-1/2 z-0"></div>
+              <div className="hidden lg:block absolute top-10 left-[10%] w-[80%] h-0.5 bg-gradient-to-r from-transparent via-indigo-200 to-transparent -translate-y-1/2 z-0 border-t-2 border-dashed border-indigo-200"></div>
 
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 relative z-10">
                 {[
@@ -464,16 +497,17 @@ const Home = () => {
                     key={idx}
                     className="flex flex-col items-center text-center relative group"
                   >
-                    <div className="w-20 h-20 bg-white border-4 border-indigo-50 rounded-full flex items-center justify-center shadow-lg mb-6 group-hover:border-indigo-100 transition-colors z-10">
-                      <item.icon size={32} className="text-indigo-600" />
+                    <div className="w-20 h-20 bg-white border border-slate-200 rounded-2xl transform rotate-3 group-hover:rotate-0 group-hover:-translate-y-2 transition-all duration-500 flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] mb-6 z-10 overflow-hidden relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <item.icon size={32} className="text-indigo-600 relative z-10 group-hover:scale-110 transition-transform duration-500" />
                     </div>
-                    <div className="absolute top-0 right-0 lg:-top-4 lg:-right-4 text-6xl font-black text-slate-50/80 -z-10 group-hover:text-indigo-50/50 transition-colors">
+                    <div className="absolute top-0 right-0 lg:-top-6 lg:-right-2 text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-slate-100 to-slate-50 -z-10 group-hover:from-indigo-50 group-hover:to-transparent transition-all duration-500 transform group-hover:scale-110 group-hover:-translate-y-4">
                       {item.step}
                     </div>
-                    <h3 className="text-xl font-bold text-slate-800 mb-3">
+                    <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-indigo-600 transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-slate-500 leading-relaxed">
+                    <p className="text-slate-500 leading-relaxed text-sm">
                       {item.desc}
                     </p>
                   </div>
@@ -488,9 +522,11 @@ const Home = () => {
           id="benefits"
           className="py-24 bg-slate-900 relative z-10 overflow-hidden"
         >
-          {/* Background glows */}
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+          {/* Background grid and shapes */}
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wNSkiLz48L3N2Zz4=')] bg-[length:40px_40px]" />
+          
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-indigo-900/30 to-transparent pointer-events-none" />
+          <div className="absolute -top-[50%] -right-[10%] w-[80%] h-[150%] bg-gradient-to-b from-indigo-500/10 to-purple-500/10 transform rotate-12 pointer-events-none blur-3xl"></div>
 
           <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -535,8 +571,9 @@ const Home = () => {
                   ))}
                 </div>
               </div>
-              <div className="relative">
-                <div className="bg-slate-800/50 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 shadow-2xl">
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-slate-800/80 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500">
                   <div className="flex items-center justify-between mb-8 border-b border-white/10 pb-6">
                     <div>
                       <p className="text-slate-400 text-sm font-medium mb-1">
@@ -578,8 +615,11 @@ const Home = () => {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-24 bg-white relative z-10">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <section id="contact" className="py-24 bg-slate-50 relative z-10 border-t border-slate-100 overflow-hidden">
+          {/* Decorative contact background */}
+          <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-[0.03] bg-[radial-gradient(#4f46e5_1px,transparent_1px)] [background-size:20px_20px]"></div>
+          
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-indigo-600 font-bold tracking-wider uppercase text-sm mb-3">
                 Get in Touch
@@ -715,14 +755,14 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-16">
             <div className="lg:col-span-4">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl overflow-hidden bg-white">
+                <div className="w-12 h-12 rounded-xl overflow-hidden bg-white">
                   <img
                     src="/src/assets/unihub.png"
                     alt="UniHub Logo"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <span className="text-white font-bold text-xl tracking-tight">
+                <span className="text-white font-bold text-2xl tracking-tight">
                   UniHub
                 </span>
               </div>

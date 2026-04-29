@@ -127,6 +127,9 @@ public class ResourceService {
         }
 
         Resource updatedResource = resourceRepository.save(java.util.Objects.requireNonNull(existingResource));
+        auditLogService.log(AuditAction.RESOURCE_STATUS_UPDATED, null,
+                "Resource '" + updatedResource.getName() + "' (#" + id + ") status changed to " + status,
+                "Resource", id);
         return toResponseDTO(updatedResource);
     }
 

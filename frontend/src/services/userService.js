@@ -1,13 +1,10 @@
-import axios from "axios";
+import api from "./api";
 
-const API_URL = "http://localhost:8081/api/user";
-
-// Configure axios to include credentials (cookies for session)
-axios.defaults.withCredentials = true;
+const BASE_PATH = "/user";
 
 export const getMe = async () => {
     try {
-        const response = await axios.get(`${API_URL}/me`);
+        const response = await api.get(`${BASE_PATH}/me`);
         return response.data;
     } catch (error) {
         throw error.response?.data || "Failed to fetch user data";
@@ -16,7 +13,7 @@ export const getMe = async () => {
 
 export const updateProfile = async (updateData) => {
     try {
-        const response = await axios.put(`${API_URL}/me`, updateData);
+        const response = await api.put(`${BASE_PATH}/me`, updateData);
         return response.data;
     } catch (error) {
         throw error.response?.data || "Failed to update profile";
@@ -25,7 +22,7 @@ export const updateProfile = async (updateData) => {
 
 export const changePassword = async (oldPassword, newPassword) => {
     try {
-        const response = await axios.put(`${API_URL}/me/password`, { oldPassword, newPassword });
+        const response = await api.put(`${BASE_PATH}/me/password`, { oldPassword, newPassword });
         return response.data;
     } catch (error) {
         throw error.response?.data || "Failed to change password";
@@ -34,7 +31,7 @@ export const changePassword = async (oldPassword, newPassword) => {
 
 export const deleteAccount = async () => {
     try {
-        const response = await axios.delete(`${API_URL}/me`);
+        const response = await api.delete(`${BASE_PATH}/me`);
         return response.data;
     } catch (error) {
         throw error.response?.data || "Failed to delete account";
@@ -43,7 +40,7 @@ export const deleteAccount = async () => {
 
 export const updateNotificationPrefs = async (prefs) => {
     try {
-        const response = await axios.put(`${API_URL}/me/notifications`, prefs);
+        const response = await api.put(`${BASE_PATH}/me/notifications`, prefs);
         return response.data;
     } catch (error) {
         throw error.response?.data || "Failed to update notification preferences";

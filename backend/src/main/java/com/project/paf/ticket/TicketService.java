@@ -128,6 +128,9 @@ public class TicketService {
 
         IncidentTicket updated = ticketRepository.save(ticket);
         log.info("Ticket #{} updated by user '{}'", id, currentUser.getEmail());
+        auditLogService.log(AuditAction.TICKET_UPDATED, currentUser,
+                "Ticket #" + id + " updated: " + updated.getCategory() + " at " + updated.getLocation(),
+                "Ticket", id);
         return mapToResponse(updated);
     }
 
@@ -324,6 +327,9 @@ public class TicketService {
 
         IncidentTicket updated = ticketRepository.save(ticket);
         log.info("Feedback received for ticket #{} from user '{}'", id, currentUser.getEmail());
+        auditLogService.log(AuditAction.TICKET_FEEDBACK_SUBMITTED, currentUser,
+                "Feedback submitted for Ticket #" + id + " with rating " + request.getRating(),
+                "Ticket", id);
         return mapToResponse(updated);
     }
 
@@ -421,6 +427,9 @@ public class TicketService {
         comment.setContent(request.getContent());
         TicketComment updated = commentRepository.save(comment);
         log.info("Comment #{} edited by '{}'", commentId, currentUser.getEmail());
+        auditLogService.log(AuditAction.TICKET_COMMENT_EDITED, currentUser,
+                "Comment #" + commentId + " edited on Ticket #" + comment.getTicket().getId(),
+                "Ticket", comment.getTicket().getId());
         return mapToCommentResponse(updated);
     }
 
@@ -434,8 +443,12 @@ public class TicketService {
     public void deleteComment(@NonNull Long commentId, User currentUser) {
         TicketComment comment = findCommentOrThrow(commentId);
         assertOwnerOrAdmin(comment.getAuthor(), currentUser, "delete");
+        Long ticketId = comment.getTicket().getId();
         commentRepository.delete(comment);
         log.info("Comment #{} deleted by '{}'", commentId, currentUser.getEmail());
+        auditLogService.log(AuditAction.TICKET_COMMENT_DELETED, currentUser,
+                "Comment #" + commentId + " deleted from Ticket #" + ticketId,
+                "Ticket", ticketId);
     }
 
     /**
