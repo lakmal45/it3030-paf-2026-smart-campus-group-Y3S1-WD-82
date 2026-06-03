@@ -40,7 +40,10 @@ import TicketDetail from "./components/tickets/TicketDetail";
 import UserManagement from "./pages/admin/UserManagement";
 import AllTickets from "./pages/admin/AllTickets";
 import AllBookings from "./pages/admin/AllBookings";
+ origin/member_2_bookingManagement
+
 import ActivityLog from "./pages/admin/ActivityLog";
+main
 
 // Manager Pages
 import Reports from "./pages/manager/Reports";
@@ -231,6 +234,99 @@ function App() {
                 />
               </Route>
 
+ origin/member_2_bookingManagement
+            {/* Admin Routes */}
+            <Route path="admin">
+              <Route
+                index
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="bookings"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <AllBookings />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="users"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <UserManagement />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="roles"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <RoleManagement />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="settings"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <SystemSettings />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="tickets"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <AllTickets />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="tickets/:id"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <TicketDetail />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="resources"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <ResourceListPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="resources/new"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <ResourceFormPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="resources/:id"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <ResourceDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="resources/:id/edit"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN", "ROLE_ADMIN"]}>
+                    <ResourceFormPage />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+
               {/* Admin Routes */}
               <Route path="admin">
                 <Route
@@ -322,6 +418,7 @@ function App() {
                   }
                 />
               </Route>
+ main
 
               {/* Manager Routes */}
               <Route path="manager">

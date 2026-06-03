@@ -35,6 +35,7 @@ export const roleNavigation = {
   ],
   ADMIN: [
     { name: "Dashboard", path: "/dashboard/admin", icon: LayoutDashboard },
+    { name: "All Bookings", path: "/dashboard/admin/bookings", icon: Calendar },
     { name: "User Management", path: "/dashboard/admin/users", icon: Users },
     { name: "All Bookings", path: "/dashboard/admin/bookings", icon: Calendar },
     { name: "All Tickets", path: "/dashboard/admin/tickets", icon: Ticket },
