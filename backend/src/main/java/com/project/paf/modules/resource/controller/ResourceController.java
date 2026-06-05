@@ -56,6 +56,7 @@ public class ResourceController {
         }
     }
 
+    // GET /api/resources
     @GetMapping
     @Operation(summary = "Get all resources", description = "Retrieves a complete list of all campus resources")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list")
@@ -63,6 +64,7 @@ public class ResourceController {
         return ResponseEntity.ok(resourceService.getAllResources());
     }
 
+    // GET /api/resources/{id}
     @GetMapping("/{id}")
     @Operation(summary = "Get resource by ID", description = "Retrieves details of a specific resource using its ID")
     @ApiResponse(responseCode = "200", description = "Resource found")
@@ -71,6 +73,7 @@ public class ResourceController {
         return ResponseEntity.ok(resourceService.getResourceById(id));
     }
 
+    // POST /api/resources
     @PostMapping
     @Operation(summary = "Create a new resource", description = "Adds a new resource to the campus catalogue (Admin only)")
     @ApiResponse(responseCode = "201", description = "Resource created successfully")
@@ -82,6 +85,7 @@ public class ResourceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
+    // PUT /api/resources/{id}
     @PutMapping("/{id}")
     @Operation(summary = "Update an existing resource", description = "Modifies an existing resource's details (Admin only)")
     @ApiResponse(responseCode = "200", description = "Resource updated successfully")
@@ -93,6 +97,7 @@ public class ResourceController {
         return ResponseEntity.ok(resourceService.updateResource(id, requestDTO));
     }
 
+    // DELETE /api/resources/{id}
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a resource", description = "Removes a resource from the system (Admin only)")
     @ApiResponse(responseCode = "204", description = "Resource deleted successfully")
@@ -104,6 +109,7 @@ public class ResourceController {
         return ResponseEntity.noContent().build();
     }
 
+    // GET /api/resources/search
     @GetMapping("/search")
     @Operation(summary = "Search resources", description = "Filters resources by name, type, location, and availability")
     @ApiResponse(responseCode = "200", description = "Search results returned")
@@ -117,6 +123,7 @@ public class ResourceController {
         return ResponseEntity.ok(resourceService.getFilteredResources(name, type, location, capacity, available));
     }
 
+    // PATCH /api/resources/{id}/status
     @PatchMapping("/{id}/status")
     @Operation(summary = "Update resource status", description = "Toggles resource status (Admin only)")
     @ApiResponse(responseCode = "200", description = "Status updated successfully")

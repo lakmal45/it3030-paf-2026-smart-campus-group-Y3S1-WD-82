@@ -20,11 +20,13 @@ public class ResourceService {
     private final ResourceRepository resourceRepository;
     private final AuditLogService auditLogService;
     private final com.project.paf.modules.user.repository.UserRepository userRepository;
+    private final com.project.paf.modules.notification.service.EmailService emailService;
 
-    public ResourceService(ResourceRepository resourceRepository, AuditLogService auditLogService, com.project.paf.modules.user.repository.UserRepository userRepository) {
+    public ResourceService(ResourceRepository resourceRepository, AuditLogService auditLogService, com.project.paf.modules.user.repository.UserRepository userRepository, com.project.paf.modules.notification.service.EmailService emailService) {
         this.resourceRepository = resourceRepository;
         this.auditLogService = auditLogService;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @jakarta.annotation.PostConstruct
@@ -75,7 +77,18 @@ public class ResourceService {
                 "Resource '" + savedResource.getName() + "' (" + savedResource.getType() + ") created at " + savedResource.getLocation(),
                 "Resource", savedResource.getId());
 
-        return toResponseDTO(savedResource);
+        ResourceResponseDTO response = toResponseDTO(savedResource);
+
+        // Get currently authenticated user to send them the confirmation email
+        org.springframework.security.core.Authentication auth = 
+            org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        
+        if (auth != null && auth.getPrincipal() instanceof com.project.paf.modules.user.model.User) {
+            com.project.paf.modules.user.model.User adminUser = (com.project.paf.modules.user.model.User) auth.getPrincipal();
+            emailService.notifyResourceCreated(adminUser, response);
+        }
+
+        return response;
     }
 
     public ResourceResponseDTO updateResource(@NonNull Long id, @Valid ResourceRequestDTO requestDTO) {
@@ -114,6 +127,9 @@ public class ResourceService {
         }
 
         Resource updatedResource = resourceRepository.save(java.util.Objects.requireNonNull(existingResource));
+        auditLogService.log(AuditAction.RESOURCE_STATUS_UPDATED, null,
+                "Resource '" + updatedResource.getName() + "' (#" + id + ") status changed to " + status,
+                "Resource", id);
         return toResponseDTO(updatedResource);
     }
 

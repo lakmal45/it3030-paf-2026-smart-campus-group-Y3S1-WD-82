@@ -51,13 +51,26 @@ public class AuditLogService {
                     String targetDescription,
                     String entityType,
                     Long entityId) {
+        String actorName = actor != null ? actor.getName() : null;
+        String actorRole = actor != null && actor.getRole() != null ? actor.getRole().name() : null;
+        log(action, actor, actorName, actorRole, targetDescription, entityType, entityId);
+    }
+
+    @Transactional
+    public void log(AuditAction action,
+                    User actor,
+                    String actorName,
+                    String actorRole,
+                    String targetDescription,
+                    String entityType,
+                    Long entityId) {
         try {
             AuditLog entry = new AuditLog();
             entry.setAction(action);
             entry.setCategory(action.getCategory());
             entry.setActor(actor);
-            entry.setActorName(actor != null ? actor.getName() : "System");
-            entry.setActorRole(actor != null && actor.getRole() != null ? actor.getRole().name() : "SYSTEM");
+            entry.setActorName(actorName != null && !actorName.isBlank() ? actorName : "System");
+            entry.setActorRole(actorRole != null && !actorRole.isBlank() ? actorRole : "SYSTEM");
             entry.setTargetDescription(targetDescription);
             entry.setEntityType(entityType);
             entry.setEntityId(entityId);

@@ -67,10 +67,10 @@ public class EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            helper.setFrom(fromAddress, fromName);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(htmlContent, true);
+            helper.setFrom(java.util.Objects.requireNonNull(fromAddress), java.util.Objects.requireNonNull(fromName));
+            helper.setTo(java.util.Objects.requireNonNull(to));
+            helper.setSubject(java.util.Objects.requireNonNull(subject));
+            helper.setText(java.util.Objects.requireNonNull(htmlContent), true);
 
             mailSender.send(message);
             log.info("Email sent via SMTP to '{}' | subject: '{}'", to, subject);
@@ -156,14 +156,40 @@ public class EmailService {
         String to      = user.getEmail();
         String name    = user.getName();
         String subject = "🔄 Role Updated — Smart Campus";
-        String html    = "<div style=\"font-family:sans-serif;color:#333;line-height:1.5;max-width:600px;\">" +
-                         "<h2 style=\"color:#4f46e5;\">Role Updated</h2>" +
-                         "<p>Hello " + (name != null ? name : "") + ",</p>" +
-                         "<p>An administrator has updated your system role to <strong>" + newRole + "</strong>.</p>" +
-                         "<p>If you believe this is an error, please contact support.</p>" +
-                         "</div>";
+        String html    = EmailTemplates.roleChanged(name, newRole);
         sendHtmlEmail(to, name, subject, html);
         log.info("Role-change notification queued for '{}'", to);
+    }
+
+    /**
+     * Sends a notification to the admin when they successfully create a resource.
+     */
+    @Async("emailTaskExecutor")
+    public void notifyResourceCreated(User admin, com.project.paf.modules.resource.dto.ResourceResponseDTO resource) {
+        if (admin == null || admin.getEmail() == null || admin.getEmail().isBlank()) {
+            return;
+        }
+
+        String subject = "🏫 New Resource Created: " + resource.getName();
+        String html = "<div style=\"font-family:sans-serif;color:#333;line-height:1.5;max-width:600px;\">"
+                    + "<h2 style=\"color:#4f46e5;\">Resource Created Successfully</h2>"
+                    + "<p>Hi " + (admin.getName() != null ? admin.getName() : "Admin") + ",</p>"
+                    + "<p>You have successfully created a new resource in the Smart Campus system.</p>"
+                    + "<div style=\"background-color:#f3f4f6;padding:15px;border-radius:8px;margin-top:20px;\">"
+                    + "<h3 style=\"margin-top:0;color:#111827;\">Resource Details:</h3>"
+                    + "<ul style=\"list-style:none;padding-left:0;margin-bottom:0;\">"
+                    + "<li style=\"margin-bottom:8px;\"><strong>Name:</strong> " + resource.getName() + "</li>"
+                    + "<li style=\"margin-bottom:8px;\"><strong>Type:</strong> " + resource.getType() + "</li>"
+                    + "<li style=\"margin-bottom:8px;\"><strong>Location:</strong> " + resource.getLocation() + "</li>"
+                    + "<li style=\"margin-bottom:8px;\"><strong>Capacity:</strong> " + resource.getCapacity() + "</li>"
+                    + "<li><strong>Description:</strong> " + resource.getDescription() + "</li>"
+                    + "</ul>"
+                    + "</div>"
+                    + "<p style=\"margin-top:20px;color:#6b7280;font-size:0.9em;\">Thank you for keeping our campus organized!</p>"
+                    + "</div>";
+
+        sendHtmlEmail(admin.getEmail(), admin.getName(), subject, html);
+        log.info("Resource creation email queued for admin '{}'", admin.getEmail());
     }
 
     // ─────────────────────────────────────────────────────────────────────────

@@ -170,10 +170,10 @@ public class BookingService {
      * Delete a booking records permanently.
      */
     public void deleteBooking(Long id) {
-        if (!bookingRepository.existsById(id)) {
+        if (!bookingRepository.existsById(java.util.Objects.requireNonNull(id))) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found");
         }
-        bookingRepository.deleteById(id);
+        bookingRepository.deleteById(java.util.Objects.requireNonNull(id));
         auditLogService.log(AuditAction.BOOKING_DELETED, null,
                 "Booking #" + id + " permanently deleted",
                 "Booking", id);

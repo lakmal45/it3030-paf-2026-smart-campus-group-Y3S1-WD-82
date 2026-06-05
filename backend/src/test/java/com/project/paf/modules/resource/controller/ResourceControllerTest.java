@@ -22,9 +22,12 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import org.springframework.security.test.context.support.WithMockUser;
 
 @WebMvcTest(ResourceController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -32,6 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // Suppress null-safety warnings for the entire class because the Spring MockMvc 
 // and Hamcrest matcher DSLs are not fully null-annotated, causing numerous 
 // false positives in a strict null-safety environment.
+@SuppressWarnings("null")
+@WithMockUser(roles = "ADMIN")
 class ResourceControllerTest {
 
     @Autowired

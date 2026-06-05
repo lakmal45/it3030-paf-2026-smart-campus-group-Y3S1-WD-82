@@ -1,5 +1,7 @@
 package com.project.paf.modules.auth.service;
 
+import com.project.paf.modules.auditlog.AuditAction;
+import com.project.paf.modules.auditlog.AuditLogService;
 import com.project.paf.modules.notification.service.EmailService;
 import com.project.paf.modules.user.model.Role;
 import com.project.paf.modules.user.model.User;
@@ -19,10 +21,13 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private final UserRepository userRepository;
     private final EmailService emailService;
+    private final AuditLogService auditLogService;
 
-    public OAuth2LoginSuccessHandler(UserRepository userRepository, EmailService emailService) {
+    public OAuth2LoginSuccessHandler(UserRepository userRepository, EmailService emailService,
+                                     AuditLogService auditLogService) {
         this.userRepository = userRepository;
         this.emailService = emailService;
+        this.auditLogService = auditLogService;
     }
 
     @Override
@@ -63,6 +68,9 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         // Send welcome email only on first-time signup (async, best-effort)
         if (isNewUser) {
             emailService.notifyWelcome(name, email, true);
+            auditLogService.log(AuditAction.USER_SIGNED_UP, user,
+                    "New user '" + user.getName() + "' (" + user.getEmail() + ") signed up with Google",
+                    "User", user.getId());
         }
 
         // Get role from database

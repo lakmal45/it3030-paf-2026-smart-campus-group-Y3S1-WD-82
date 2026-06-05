@@ -148,7 +148,7 @@ public class TicketController {
      */
     @PutMapping("/{id}/feedback")
     public ResponseEntity<TicketResponse> submitFeedback(
-            @PathVariable Long id,
+            @PathVariable @NonNull Long id,
             @Valid @RequestBody SubmitFeedbackRequest request,
             HttpSession session,
             @RequestHeader(value = "X-User-Email", required = false) String emailHeader) {

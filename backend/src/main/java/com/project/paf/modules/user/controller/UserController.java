@@ -34,7 +34,7 @@ public class UserController {
         if (currentUser == null) {
             return ResponseEntity.status(401).body("Not logged in");
         }
-        User updatedUser = userService.updateUser(currentUser.getId(), updateData);
+        User updatedUser = userService.updateUser(java.util.Objects.requireNonNull(currentUser.getId()), updateData);
         session.setAttribute("user", updatedUser);
         return ResponseEntity.ok(updatedUser);
     }
@@ -50,7 +50,7 @@ public class UserController {
         String newPassword = request.get("newPassword");
         
         try {
-            userService.changePassword(currentUser.getId(), oldPassword, newPassword);
+            userService.changePassword(java.util.Objects.requireNonNull(currentUser.getId()), oldPassword, newPassword);
             return ResponseEntity.ok("Password updated successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -70,7 +70,7 @@ public class UserController {
         Boolean pushEnabled = request.containsKey("pushNotificationsEnabled")
                 ? Boolean.TRUE.equals(request.get("pushNotificationsEnabled"))
                 : null;
-        User updatedUser = userService.updateNotificationPrefs(currentUser.getId(), emailEnabled, pushEnabled);
+        User updatedUser = userService.updateNotificationPrefs(java.util.Objects.requireNonNull(currentUser.getId()), emailEnabled, pushEnabled);
         session.setAttribute("user", updatedUser);
         return ResponseEntity.ok(updatedUser);
     }
@@ -81,7 +81,7 @@ public class UserController {
         if (currentUser == null) {
             return ResponseEntity.status(401).body("Not logged in");
         }
-        userService.deleteUser(currentUser.getId());
+        userService.deleteUser(java.util.Objects.requireNonNull(currentUser.getId()), currentUser);
         session.invalidate();
         return ResponseEntity.ok("Account deleted successfully");
     }

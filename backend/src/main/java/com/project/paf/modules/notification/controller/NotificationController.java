@@ -85,7 +85,7 @@ public class NotificationController {
             HttpSession session,
             @RequestHeader(value = "X-User-Email", required = false) String emailHeader) {
         User user = resolveUser(session, emailHeader);
-        appNotificationService.deleteNotification(id, user);
+        appNotificationService.deleteNotification(java.util.Objects.requireNonNull(id), user);
         return ResponseEntity.noContent().build();
     }
 }
